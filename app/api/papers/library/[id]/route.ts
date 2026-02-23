@@ -36,7 +36,7 @@ export async function GET(
         }
 
         return NextResponse.json({ paper: data })
-    } catch (error) {
+    } catch (error: unknown) {
         console.error('Fetch single paper error:', error)
         return NextResponse.json({ error: error instanceof Error ? error.message : 'Failed to fetch paper' }, { status: 500 })
     }

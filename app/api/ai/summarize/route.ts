@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
     const summary = await generateSummary(title, abstract, authors || []);
 
     return NextResponse.json({ summary });
-  } catch (error) {
+  } catch (error: unknown) {
     console.error('Summary generation error:', error);
     return NextResponse.json(
       { error: 'Failed to generate summary', details: error instanceof Error ? error.message : String(error) },
