@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react';
+import { useNotification } from '@/components/ui/notifications';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
@@ -11,6 +12,7 @@ export default function LiteratureReviewPage() {
   const [paperData, setPaperData] = useState('');
   const [review, setReview] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const { showNotification } = useNotification();
 
   const generateReview = async () => {
     if (!paperData.trim()) return;
@@ -37,9 +39,10 @@ export default function LiteratureReviewPage() {
 
       const data = await response.json();
       setReview(data.review);
+      showNotification('Literature review generated successfully', 'success');
     } catch (error) {
       console.error('Review generation failed:', error);
-      setReview('Failed to generate review. Please try again.');
+      showNotification('Failed to generate review. Please check your API key.', 'error');
     } finally {
       setIsLoading(false);
     }

@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react';
+import { useNotification } from '@/components/ui/notifications'
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
@@ -11,6 +12,7 @@ export default function ComparePage() {
   const [paperData, setPaperData] = useState('');
   const [comparison, setComparison] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const { showNotification } = useNotification();
 
   const comparePapers = async () => {
     if (!paperData.trim()) return;
@@ -29,7 +31,7 @@ export default function ComparePage() {
       });
 
       if (papers.length < 2) {
-        alert('Please provide at least 2 papers to compare');
+        showNotification('Please provide at least 2 papers to compare', 'warning');
         setIsLoading(false);
         return;
       }
@@ -42,9 +44,10 @@ export default function ComparePage() {
 
       const data = await response.json();
       setComparison(data.comparison);
+      showNotification('Comparison generated successfully', 'success');
     } catch (error) {
       console.error('Comparison failed:', error);
-      setComparison('Failed to generate comparison. Please try again.');
+      showNotification('Failed to generate comparison. Please check your API key.', 'error');
     } finally {
       setIsLoading(false);
     }

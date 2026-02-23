@@ -7,7 +7,7 @@ Full-stack academic research assistant. Students enter a topic → get papers fr
 - **Frontend**: Next.js 14 (App Router), TypeScript, Tailwind CSS, shadcn/ui
 - **Backend**: Next.js API Routes + Server Actions
 - **Database**: Supabase (PostgreSQL + Auth)
-- **AI**: OpenAI GPT-4o-mini (NOT gpt-4 — cost/speed critical)
+- **AI**: Google Gemini 1.5 Flash (fast and cost-effective)
 - **Paper APIs**: Semantic Scholar (primary, free), OpenAlex (free), CrossRef (free). NO paid APIs. Remove any failing/paid sources.
 - **Visualization**: D3.js for citation mesh, Recharts for analytics
 - **Deployment**: Vercel
@@ -16,7 +16,7 @@ Full-stack academic research assistant. Students enter a topic → get papers fr
 - Papers stream progressively: as ANY API returns results, display them immediately while others continue fetching in background
 - Deduplication filter by DOI + title similarity before displaying
 - Search bar with autocomplete suggestions (debounced, using Semantic Scholar autocomplete API)
-- All AI calls use `gpt-4o-mini` model string — NEVER gpt-4 or gpt-4-turbo
+- All AI calls use `gemini-1.5-flash` model — fast, accurate, and cost-effective
 - Server-sent events (SSE) for streaming paper results to frontend
 
 ## Key Patterns
@@ -38,7 +38,7 @@ Full-stack academic research assistant. Students enter a topic → get papers fr
 - Branch: `main` only (speed mode for FYP)
 
 ## DO NOT
-- Use gpt-4 or gpt-4-turbo anywhere
+- Use expensive AI models - stick to Gemini 1.5 Flash
 - Add paid paper APIs (no Elsevier, Springer, IEEE Xplore paid endpoints)
 - Install unnecessary dependencies
 - Over-engineer — this is an FYP with 1-hour timeline, ship fast

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { comparePapers } from '@/lib/services/ai/openai-service';
+import { comparePapers } from '@/lib/services/ai/gemini-service';
 
 export async function POST(request: NextRequest) {
   try {

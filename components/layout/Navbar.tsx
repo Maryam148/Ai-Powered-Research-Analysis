@@ -2,59 +2,59 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { Menu } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { Moon, Sun, Menu } from 'lucide-react'
-import { useTheme } from 'next-themes'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
+import Image from 'next/image'
 
 export function Navbar() {
   const pathname = usePathname()
-  const { theme, setTheme } = useTheme()
+
+  // Hide navbar on auth and dashboard pages
+  if (pathname?.startsWith('/auth') || pathname?.startsWith('/dashboard')) return null
 
   const links = [
-    { href: '/', label: 'Home' },
-    { href: '/dashboard', label: 'Dashboard' },
-    { href: '/literature-review', label: 'Lit Review' },
-    { href: '/compare', label: 'Compare' },
-    { href: '/trends', label: 'Trends' },
+    { href: '/dashboard', label: 'Benefits' },
+    { href: '/search', label: 'How it work' },
+    { href: '/literature-review', label: 'Testimonials' },
+    { href: '/trends', label: 'Pricing' },
   ]
 
   return (
-    <nav className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-        <div className="flex items-center gap-8">
-          <Link href="/" className="font-bold text-xl">
-            ReSearch Flow
-          </Link>
+    <nav className="bg-hero-section-bg">
+      <div className="max-w-[1200px] mx-auto px-6 h-[72px] flex items-center justify-between">
+        {/* Brand Name */}
+        <Link href="/" className="flex items-center">
+          <span className="text-2xl tracking-wide" style={{ fontFamily: 'var(--font-bungee)', color: 'hsl(45, 100%, 50%)' }}>
+            Research Flow
+          </span>
+        </Link>
 
-          <div className="hidden md:flex items-center gap-6">
-            {links.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`text-sm font-medium transition-colors hover:text-primary ${
-                  pathname === link.href
-                    ? 'text-foreground'
-                    : 'text-muted-foreground'
+        {/* Desktop Navigation Links */}
+        <div className="hidden md:flex items-center gap-8">
+          {links.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className={`text-[15px] font-medium transition-colors hover:text-foreground ${pathname === link.href
+                ? 'text-foreground'
+                : 'text-foreground/70'
                 }`}
-              >
-                {link.label}
-              </Link>
-            ))}
-          </div>
+            >
+              {link.label}
+            </Link>
+          ))}
         </div>
 
+        {/* CTA Button */}
         <div className="flex items-center gap-4">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-          >
-            <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-            <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-            <span className="sr-only">Toggle theme</span>
-          </Button>
+          <Link href="/auth/login" className="hidden sm:block">
+            <button className="navbar-cta-btn">
+              Login
+            </button>
+          </Link>
 
+          {/* Mobile Menu */}
           <div className="md:hidden">
             <Sheet>
               <SheetTrigger asChild>
@@ -73,6 +73,11 @@ export function Navbar() {
                       {link.label}
                     </Link>
                   ))}
+                  <Link href="/auth/login">
+                    <button className="navbar-cta-btn w-full mt-4">
+                      Login
+                    </button>
+                  </Link>
                 </div>
               </SheetContent>
             </Sheet>

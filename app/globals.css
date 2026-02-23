@@ -29,6 +29,10 @@
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
+
+    /* Hero Section Colors */
+    --hero-bg: 40 33% 96%;
+    --hero-accent: 45 100% 60%;
   }
 
   .dark {
@@ -56,6 +60,10 @@
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
+
+    /* Hero Section Colors — Dark Mode */
+    --hero-bg: 222.2 84% 6%;
+    --hero-accent: 45 100% 55%;
   }
 }
 
@@ -63,7 +71,118 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* ===== Hero Section ===== */
+.hero-section {
+  background: hsl(var(--hero-bg));
+  position: relative;
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 0%,
+      hsl(var(--hero-accent) / 0.08),
+      transparent 70%);
+  pointer-events: none;
+}
+
+/* Navbar CTA — yellow with black border like Didasko */
+.navbar-cta-btn {
+  background: hsl(var(--hero-accent));
+  color: hsl(var(--foreground));
+  border: 2px solid hsl(var(--foreground));
+  border-radius: 0.5rem;
+  padding: 0.5rem 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.navbar-cta-btn:hover {
+  background: hsl(var(--hero-accent) / 0.85);
+  box-shadow: 2px 2px 0px 0px hsl(var(--foreground));
+}
+
+/* Hero section bg utility for navbar */
+.bg-hero-section-bg {
+  background: hsl(var(--hero-bg));
+}
+
+/* Primary CTA Button — dark like Didasko */
+.hero-cta-primary {
+  background: hsl(var(--foreground));
+  color: hsl(var(--background));
+  border: 2px solid hsl(var(--foreground));
+}
+
+.hero-cta-primary:hover {
+  background: hsl(var(--foreground) / 0.85);
+}
+
+/* Dashboard Preview Card */
+.dashboard-preview-card {
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow:
+    0 25px 50px -12px rgba(0, 0, 0, 0.15),
+    0 12px 24px -8px rgba(0, 0, 0, 0.1);
+  border: 1px solid hsl(var(--border));
+  background: hsl(var(--card));
+  transform-origin: center bottom;
+  will-change: transform;
+}
+
+.dark .dashboard-preview-card {
+  box-shadow:
+    0 25px 50px -12px rgba(0, 0, 0, 0.4),
+    0 12px 24px -8px rgba(0, 0, 0, 0.3);
+}
+
+/* Problem Cards — neo-brutalist style */
+.problem-card {
+  transition: all 0.2s ease;
+  box-shadow: 4px 4px 0px 0px hsl(var(--foreground));
+}
+
+.problem-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 6px 6px 0px 0px hsl(var(--foreground));
+}
+
+/* Bento Cards — neo-brutalist style */
+.bento-card {
+  transition: all 0.2s ease;
+  box-shadow: 4px 4px 0px 0px hsl(var(--foreground));
+}
+
+.bento-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 6px 6px 0px 0px hsl(var(--foreground));
+}
+
+/* FAQ Items — neo-brutalist style */
+.faq-item {
+  transition: all 0.2s ease;
+  box-shadow: 3px 3px 0px 0px hsl(var(--foreground));
+}
+
+.faq-item:hover {
+  transform: translateY(-1px);
+  box-shadow: 5px 5px 0px 0px hsl(var(--foreground));
+}
+
+/* Logo Text — Didasko-style yellow with outline */
+.logo-text {
+  color: hsl(var(--hero-accent));
+  -webkit-text-stroke: 1px hsl(35, 70%, 35%);
+  text-shadow: 1px 2px 0px hsl(35, 70%, 35%);
+  font-style: italic;
 }

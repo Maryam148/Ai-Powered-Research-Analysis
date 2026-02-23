@@ -1,0 +1,667 @@
+/* ===== Auth Page Globals ===== */
+/* Background is now handled by .hero-section from globals.css */
+
+/* ===== Glassmorphism Card ===== */
+.glass-card {
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 2px solid hsl(var(--foreground));
+    border-radius: 24px;
+    box-shadow: 6px 6px 0px 0px hsl(var(--foreground) / 0.1);
+}
+
+/* ===== Tab Switcher ===== */
+.auth-tabs {
+    display: flex;
+    background: hsl(var(--foreground) / 0.06);
+    border-radius: 12px;
+    padding: 4px;
+    gap: 4px;
+}
+
+.auth-tab {
+    flex: 1;
+    padding: 10px 0;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: hsl(var(--foreground) / 0.5);
+    border: none;
+    background: transparent;
+}
+
+.auth-tab.active {
+    background: white;
+    color: hsl(var(--foreground));
+    box-shadow: 0 2px 8px hsl(var(--foreground) / 0.08);
+    border: 1.5px solid hsl(var(--foreground) / 0.15);
+}
+
+/* ===== Form Inputs ===== */
+.auth-input {
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: 12px;
+    border: 2px solid hsl(var(--foreground) / 0.15);
+    background: rgba(255, 255, 255, 0.8);
+    font-size: 14px;
+    transition: all 0.2s ease;
+    outline: none;
+    color: hsl(var(--foreground));
+}
+
+.auth-input::placeholder {
+    color: hsl(var(--foreground) / 0.35);
+}
+
+.auth-input:focus {
+    border-color: hsl(var(--hero-accent));
+    box-shadow: 0 0 0 3px hsl(var(--hero-accent) / 0.2);
+}
+
+/* ===== Primary Button ===== */
+.auth-btn-primary {
+    width: 100%;
+    padding: 12px 0;
+    border-radius: 12px;
+    border: 2px solid hsl(var(--foreground));
+    background: hsl(var(--foreground));
+    color: hsl(var(--background));
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 3px 3px 0px 0px hsl(var(--foreground) / 0.15);
+}
+
+.auth-btn-primary:hover {
+    transform: translateY(-1px) scale(1.02);
+    box-shadow: 5px 5px 0px 0px hsl(var(--foreground) / 0.15);
+}
+
+.auth-btn-primary:active {
+    transform: translateY(0) scale(1);
+}
+
+.auth-btn-primary:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* ===== Google Button ===== */
+.auth-btn-google {
+    width: 100%;
+    padding: 12px 0;
+    border-radius: 12px;
+    border: 2px solid hsl(var(--foreground) / 0.15);
+    background: white;
+    color: hsl(var(--foreground));
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.auth-btn-google:hover {
+    background: hsl(var(--hero-accent) / 0.1);
+    border-color: hsl(var(--foreground) / 0.25);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px hsl(var(--foreground) / 0.06);
+}
+
+/* ===== Divider ===== */
+.auth-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: hsl(var(--foreground) / 0.4);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: hsl(var(--foreground) / 0.12);
+}
+
+/* ===== Explainer Container ===== */
+.explainer-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 500px;
+    background: hsl(var(--foreground));
+    border-radius: 24px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 32px;
+    border: 2px solid hsl(var(--foreground));
+    box-shadow: 6px 6px 0px 0px hsl(var(--foreground) / 0.2);
+}
+
+/* ===== Particles ===== */
+.explainer-particles {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.particle {
+    position: absolute;
+    background: hsl(var(--hero-accent) / 0.2);
+    border-radius: 50%;
+    animation: particleFloat 8s ease-in-out infinite;
+}
+
+@keyframes particleFloat {
+
+    0%,
+    100% {
+        transform: translateY(0) translateX(0);
+        opacity: 0.15;
+    }
+
+    50% {
+        transform: translateY(-20px) translateX(10px);
+        opacity: 0.3;
+    }
+}
+
+/* ===== Scene Management ===== */
+.explainer-viewport {
+    position: relative;
+    width: 100%;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.explainer-scene {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.scene-active {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+.scene-hidden {
+    opacity: 0;
+    transform: translateY(10px) scale(0.97);
+    pointer-events: none;
+}
+
+.scene-label {
+    color: hsl(var(--hero-accent));
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    text-align: center;
+    margin-bottom: 8px;
+}
+
+.scene-sublabel {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 13px;
+    text-align: center;
+    margin-top: 4px;
+}
+
+/* ===== Scene 0: Search Bar ===== */
+.search-bar-anim {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 14px;
+    padding: 14px 20px;
+    width: 85%;
+    max-width: 360px;
+}
+
+.search-icon {
+    font-size: 16px;
+}
+
+.typed-text {
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.cursor-blink {
+    color: rgba(255, 255, 255, 0.7);
+    animation: blink 0.8s step-end infinite;
+}
+
+@keyframes blink {
+    50% {
+        opacity: 0;
+    }
+}
+
+.paper-cards-anim {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 85%;
+    max-width: 360px;
+}
+
+.paper-card-mini {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 10px 14px;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 12px;
+    font-weight: 500;
+    animation: slideUp 0.4s ease forwards;
+    opacity: 0;
+    transform: translateY(10px);
+}
+
+.paper-card-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+@keyframes slideUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===== Scene 1: Metadata Cards ===== */
+.metadata-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 90%;
+    max-width: 380px;
+}
+
+.metadata-card {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 12px 16px;
+    animation: slideUp 0.5s ease forwards;
+    opacity: 0;
+}
+
+.metadata-title {
+    color: white;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.metadata-authors {
+    color: rgba(255, 255, 255, 0.45);
+    font-size: 11px;
+    margin-bottom: 4px;
+}
+
+.metadata-abstract {
+    color: rgba(255, 255, 255, 0.35);
+    font-size: 10px;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.metadata-badge {
+    margin-top: 6px;
+    display: flex;
+    gap: 8px;
+}
+
+.metadata-badge span {
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.55);
+    background: rgba(255, 255, 255, 0.06);
+    padding: 2px 8px;
+    border-radius: 6px;
+}
+
+/* ===== Scene 2: Citation Mesh ===== */
+.citation-mesh {
+    width: 85%;
+    max-width: 340px;
+    aspect-ratio: 3/2;
+}
+
+.mesh-svg {
+    width: 100%;
+    height: 100%;
+}
+
+.mesh-line {
+    stroke: rgba(255, 255, 255, 0.15);
+    stroke-width: 1.5;
+    stroke-dasharray: 200;
+    stroke-dashoffset: 200;
+    animation: drawLine 1s ease forwards;
+}
+
+@keyframes drawLine {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+.mesh-node {
+    animation: nodeAppear 0.6s ease forwards;
+    opacity: 0;
+}
+
+.mesh-center {
+    fill: hsl(var(--hero-accent));
+    animation-delay: 0s;
+    filter: drop-shadow(0 0 8px hsl(var(--hero-accent) / 0.5));
+}
+
+.mesh-outer {
+    fill: rgba(255, 255, 255, 0.5);
+}
+
+@keyframes nodeAppear {
+    to {
+        opacity: 1;
+    }
+}
+
+/* ===== Scene 3: AI Summary ===== */
+.ai-split {
+    display: flex;
+    gap: 12px;
+    width: 90%;
+    max-width: 380px;
+}
+
+.ai-summary-card,
+.ai-trends-card {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 12px;
+}
+
+.ai-btn {
+    display: inline-block;
+    background: hsl(var(--hero-accent) / 0.3);
+    color: hsl(var(--hero-accent));
+    font-size: 10px;
+    font-weight: 600;
+    padding: 5px 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.ai-typing {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.ai-line {
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 10px;
+    line-height: 1.5;
+    opacity: 0;
+    animation: fadeInLine 0.5s ease forwards;
+}
+
+@keyframes fadeInLine {
+    to {
+        opacity: 1;
+    }
+}
+
+.mini-chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    height: 50px;
+    margin-bottom: 10px;
+}
+
+.chart-bar {
+    flex: 1;
+    background: hsl(var(--hero-accent));
+    border-radius: 3px 3px 0 0;
+    animation: growBar 0.6s ease forwards;
+    transform-origin: bottom;
+    transform: scaleY(0);
+}
+
+@keyframes growBar {
+    to {
+        transform: scaleY(1);
+    }
+}
+
+.keyword-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.kw-tag {
+    font-size: 9px;
+    color: rgba(255, 255, 255, 0.65);
+    background: rgba(255, 255, 255, 0.08);
+    padding: 2px 6px;
+    border-radius: 4px;
+    opacity: 0;
+    animation: fadeInLine 0.4s ease forwards;
+}
+
+/* ===== Scene 4: Export ===== */
+.export-view {
+    display: flex;
+    gap: 16px;
+    width: 90%;
+    max-width: 380px;
+    align-items: flex-start;
+}
+
+.doc-preview {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.doc-section {
+    opacity: 0;
+    animation: slideUp 0.5s ease forwards;
+}
+
+.doc-heading {
+    color: hsl(var(--hero-accent));
+    font-size: 11px;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.doc-lines {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.doc-line {
+    height: 4px;
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 2px;
+    width: 100%;
+}
+
+.doc-line.short {
+    width: 60%;
+}
+
+.export-icons {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.export-icon {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 8px 12px;
+    opacity: 0;
+    animation: slideUp 0.4s ease forwards;
+}
+
+.export-emoji {
+    font-size: 16px;
+}
+
+.export-label {
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 11px;
+    font-weight: 600;
+}
+
+/* ===== Progress Dots ===== */
+.scene-dots {
+    display: flex;
+    gap: 8px;
+    margin-top: 20px;
+}
+
+.scene-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.dot-active {
+    background: hsl(var(--hero-accent));
+    width: 24px;
+    border-radius: 4px;
+}
+
+/* ===== Form Transitions ===== */
+.form-enter {
+    animation: formFadeIn 0.3s ease;
+}
+
+@keyframes formFadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* ===== Checkbox ===== */
+.auth-checkbox-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.auth-checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: hsl(var(--foreground) / 0.55);
+    cursor: pointer;
+}
+
+.auth-checkbox-label input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: hsl(var(--hero-accent));
+    cursor: pointer;
+}
+
+.auth-forgot {
+    font-size: 13px;
+    color: hsl(var(--foreground));
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.auth-forgot:hover {
+    text-decoration: underline;
+}
+
+/* ===== Error Message ===== */
+.auth-error {
+    background: rgba(239, 68, 68, 0.08);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    color: #dc2626;
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-size: 13px;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+    .explainer-container {
+        min-height: 350px;
+        border-radius: 16px;
+        padding: 24px 16px;
+    }
+
+    .scene-label {
+        font-size: 16px;
+    }
+}
