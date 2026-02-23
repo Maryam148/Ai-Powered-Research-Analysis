@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useNotification } from '@/components/ui/notifications'
 import Link from 'next/link'
 
@@ -33,11 +33,7 @@ export default function LibraryPage() {
     const [deletingId, setDeletingId] = useState<string | null>(null)
     const { showNotification } = useNotification()
 
-    useEffect(() => {
-        fetchLibrary()
-    }, [])
-
-    const fetchLibrary = async () => {
+    const fetchLibrary = useCallback(async () => {
         try {
             const res = await fetch('/api/papers/library')
             if (!res.ok) throw new Error('Failed to fetch library')
@@ -49,7 +45,11 @@ export default function LibraryPage() {
         } finally {
             setIsLoading(false)
         }
-    }
+    }, [showNotification])
+
+    useEffect(() => {
+        fetchLibrary()
+    }, [fetchLibrary])
 
     const handleDelete = async (id: string) => {
         setDeletingId(id)

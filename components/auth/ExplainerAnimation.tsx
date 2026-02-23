@@ -9,9 +9,6 @@ export function ExplainerAnimation() {
     const [scene, setScene] = useState(0)
     const [typedText, setTypedText] = useState('')
     const [showCards, setShowCards] = useState(false)
-    const [showNodes, setShowNodes] = useState(false)
-    const [showSummary, setShowSummary] = useState(false)
-    const [showExport, setShowExport] = useState(false)
 
     // Scene cycling
     useEffect(() => {
@@ -42,10 +39,9 @@ export function ExplainerAnimation() {
 
     // Scene triggers
     useEffect(() => {
-        if (scene === 1) { setShowCards(true); setShowNodes(false); setShowSummary(false); setShowExport(false) }
-        if (scene === 2) { setShowNodes(true); setShowCards(false) }
-        if (scene === 3) { setShowSummary(true); setShowNodes(false) }
-        if (scene === 4) { setShowExport(true); setShowSummary(false) }
+        if (scene === 1) { setShowCards(true); }
+        if (scene === 2) { setShowCards(false) }
+        // other scenes just CSS animate
     }, [scene])
 
     return (

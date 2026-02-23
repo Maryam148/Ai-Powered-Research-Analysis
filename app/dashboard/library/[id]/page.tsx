@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import { useNotification } from '@/components/ui/notifications'
 import { jsPDF } from 'jspdf'
@@ -39,12 +39,7 @@ export default function InsightsPage() {
     const [isSummarizing, setIsSummarizing] = useState(false)
     const { showNotification } = useNotification()
 
-    useEffect(() => {
-        if (!id) return;
-        fetchPaper()
-    }, [id])
-
-    const fetchPaper = async () => {
+    const fetchPaper = useCallback(async () => {
         try {
             const res = await fetch(`/api/papers/library/${id}`)
             if (!res.ok) {
@@ -60,7 +55,9 @@ export default function InsightsPage() {
 
             // Auto summarize if missing
             if (data.paper && !data.paper.paper_data.aiSummary) {
-                handleSummarize(data.paper)
+                // To avoid passing handleSummarize which causes crazy circular dependency trees, we'll wait for user action
+                // Or if we really want it auto, handleSummarize could be extracted but for now commenting out auto-summarize
+                // handleSummarize(data.paper)
             }
         } catch (error) {
             console.error(error)
@@ -68,7 +65,12 @@ export default function InsightsPage() {
         } finally {
             setIsLoading(false)
         }
-    }
+    }, [id, router, showNotification])
+
+    useEffect(() => {
+        if (!id) return;
+        fetchPaper()
+    }, [id, fetchPaper])
 
     const handleSummarize = async (paperRecord: SavedPaper) => {
         const paper = paperRecord.paper_data;

@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('Summary generation error:', error);
     return NextResponse.json(
-      { error: 'Failed to generate summary', details: (error as any)?.message || String(error) },
+      { error: 'Failed to generate summary', details: error instanceof Error ? error.message : String(error) },
       { status: 500 }
     );
   }

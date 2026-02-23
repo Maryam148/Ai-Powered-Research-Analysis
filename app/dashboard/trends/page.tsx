@@ -23,7 +23,7 @@ export default function DashboardTrends() {
     return (
         <div className="p-6 lg:p-8 max-w-[1000px]">
             <h1 className="text-2xl font-bold text-foreground mb-1">Research Trends</h1>
-            <p className="text-sm text-foreground/35 mb-8">Discover what's trending in academic research</p>
+            <p className="text-sm text-foreground/35 mb-8">Discover what&apos;s trending in academic research</p>
 
             {/* Publication Growth Chart */}
             <div className="bg-white rounded-2xl border-2 border-foreground/6 p-6 shadow-sm mb-8">

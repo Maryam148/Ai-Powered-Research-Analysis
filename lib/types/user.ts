@@ -18,6 +18,7 @@ export interface SavedPaper {
   user_id: string;
   paper_doi?: string;
   paper_title: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   paper_data: any;
   notes?: string;
   created_at: string;

@@ -1,9 +1,11 @@
 import { createClient } from '@/lib/supabase/server'
 import { NextResponse } from 'next/server'
+import { SupabaseClient } from '@supabase/supabase-js'
+import { Database } from '@/lib/types/database'
 
-export async function GET(req: Request) {
+export async function GET() {
     try {
-        const supabase = await createClient() as any
+        const supabase = await createClient() as unknown as SupabaseClient<Database>
         const { data: { user } } = await supabase.auth.getUser()
 
         if (!user) {
@@ -19,15 +21,15 @@ export async function GET(req: Request) {
         if (error) throw error
 
         return NextResponse.json({ papers: data })
-    } catch (error: any) {
+    } catch (error) {
         console.error('Library fetch error:', error)
-        return NextResponse.json({ error: error.message || 'Failed to fetch library' }, { status: 500 })
+        return NextResponse.json({ error: error instanceof Error ? error.message : 'Failed to fetch library' }, { status: 500 })
     }
 }
 
 export async function DELETE(req: Request) {
     try {
-        const supabase = await createClient() as any
+        const supabase = await createClient() as unknown as SupabaseClient<Database>
         const { data: { user } } = await supabase.auth.getUser()
 
         if (!user) {
@@ -50,8 +52,8 @@ export async function DELETE(req: Request) {
         if (error) throw error
 
         return NextResponse.json({ success: true })
-    } catch (error: any) {
+    } catch (error) {
         console.error('Library delete error:', error)
-        return NextResponse.json({ error: error.message || 'Failed to delete paper' }, { status: 500 })
+        return NextResponse.json({ error: error instanceof Error ? error.message : 'Failed to delete paper' }, { status: 500 })
     }
 }

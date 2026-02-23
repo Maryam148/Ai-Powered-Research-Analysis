@@ -22,7 +22,6 @@ export default function DashboardSearch() {
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState('')
     const [savingId, setSavingId] = useState<string | null>(null)
-    const [savedIds, setSavedIds] = useState<Set<string>>(new Set())
     const [activeFilter, setActiveFilter] = useState('All')
     const { showNotification } = useNotification()
     const router = useRouter()
@@ -71,6 +70,7 @@ export default function DashboardSearch() {
                     }
                 }
             }
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (err: any) {
             console.error('Search error:', err)
             setError(err.message || 'An error occurred during search')
@@ -91,7 +91,6 @@ export default function DashboardSearch() {
 
             if (!response.ok) throw new Error('Failed to save paper')
 
-            setSavedIds(prev => new Set(prev).add(paper.id))
             showNotification('Paper saved. Redirecting to insights...', 'success')
 
             // Then navigate to the insights page
@@ -166,7 +165,7 @@ export default function DashboardSearch() {
             {/* Results */}
             <div className="space-y-4">
                 {results.length === 0 && !isLoading && !error && query && (
-                    <p className="text-sm text-foreground/40 text-center py-10">No results found for "{query}".</p>
+                    <p className="text-sm text-foreground/40 text-center py-10">No results found for &quot;{query}&quot;.</p>
                 )}
 
                 {results.length === 0 && !isLoading && !query && (

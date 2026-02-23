@@ -1,12 +1,14 @@
 import { createClient } from '@/lib/supabase/server'
 import { NextResponse } from 'next/server'
+import { SupabaseClient } from '@supabase/supabase-js'
+import { Database } from '@/lib/types/database'
 
 export async function GET(
     req: Request,
     { params }: { params: Promise<{ id: string }> }
 ) {
     try {
-        const supabase = await createClient() as any
+        const supabase = await createClient() as unknown as SupabaseClient<Database>
         const { data: { user } } = await supabase.auth.getUser()
 
         if (!user) {
@@ -34,8 +36,8 @@ export async function GET(
         }
 
         return NextResponse.json({ paper: data })
-    } catch (error: any) {
+    } catch (error) {
         console.error('Fetch single paper error:', error)
-        return NextResponse.json({ error: error.message || 'Failed to fetch paper' }, { status: 500 })
+        return NextResponse.json({ error: error instanceof Error ? error.message : 'Failed to fetch paper' }, { status: 500 })
     }
 }

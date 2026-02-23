@@ -21,7 +21,7 @@ export default function SearchError({
         <Card className="p-8 text-center space-y-4">
           <h2 className="text-2xl font-bold">Search Failed</h2>
           <p className="text-muted-foreground">
-            We couldn't complete your search. Please try again.
+            We couldn&apos;t complete your search. Please try again.
           </p>
           <Button onClick={reset}>Retry Search</Button>
         </Card>

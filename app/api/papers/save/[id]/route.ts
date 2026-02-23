@@ -1,12 +1,14 @@
 import { createClient } from '@/lib/supabase/server'
 import { NextResponse } from 'next/server'
+import { SupabaseClient } from '@supabase/supabase-js'
+import { Database } from '@/lib/types/database'
 
 export async function POST(
     req: Request,
     { params }: { params: Promise<{ id: string }> }
 ) {
     try {
-        const supabase = await createClient() as any
+        const supabase = await createClient() as unknown as SupabaseClient<Database>
         const { data: { user } } = await supabase.auth.getUser()
 
         if (!user) {
@@ -32,7 +34,7 @@ export async function POST(
         if (fetchError) throw fetchError;
 
         const updatedPaperData = {
-            ...existingData.paper_data,
+            ...existingData.paper_data as Record<string, unknown>, // cast to object so we can spread
             aiSummary
         }
 
@@ -47,8 +49,8 @@ export async function POST(
         if (error) throw error
 
         return NextResponse.json({ success: true, paper: data })
-    } catch (error: any) {
+    } catch (error) {
         console.error('Update summary error:', error)
-        return NextResponse.json({ error: error.message || 'Failed to update paper summary' }, { status: 500 })
+        return NextResponse.json({ error: error instanceof Error ? error.message : 'Failed to update paper summary' }, { status: 500 })
     }
 }

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { AutocompleteSuggestion } from '@/lib/types/paper';
 
 export function useAutocomplete(query: string, debounceMs = 300) {

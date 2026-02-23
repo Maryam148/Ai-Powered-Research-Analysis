@@ -62,6 +62,7 @@ export async function searchSemanticScholar(query: string, limit = 50): Promise<
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function autocompleteSemanticScholar(query: string): Promise<any[]> {
   try {
     const params = new URLSearchParams({ query });
