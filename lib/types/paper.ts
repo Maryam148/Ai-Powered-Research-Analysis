@@ -10,6 +10,7 @@ export interface Paper {
   source: 'semantic-scholar' | 'openalex' | 'crossref';
   venue?: string;
   fieldsOfStudy?: string[];
+  aiSummary?: string;
 }
 
 export interface Author {

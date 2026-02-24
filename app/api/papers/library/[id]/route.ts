@@ -41,3 +41,35 @@ export async function GET(
         return NextResponse.json({ error: error instanceof Error ? error.message : 'Failed to fetch paper' }, { status: 500 })
     }
 }
+
+export async function PATCH(
+    req: Request,
+    { params }: { params: Promise<{ id: string }> }
+) {
+    try {
+        const supabase = await createClient() as unknown as SupabaseClient<Database>
+        const { data: { user } } = await supabase.auth.getUser()
+        if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+
+        const { id } = await params
+        const body = await req.json()
+
+        const updateData: { notes?: string | null; tags?: string[] | null } = {}
+        if ('notes' in body) updateData.notes = body.notes
+        if ('tags' in body) updateData.tags = body.tags
+
+        const { data, error } = await supabase
+            .from('saved_papers')
+            .update(updateData)
+            .eq('id', id)
+            .eq('user_id', user.id)
+            .select()
+            .single()
+
+        if (error) throw error
+        return NextResponse.json({ paper: data })
+    } catch (error: unknown) {
+        console.error('PATCH paper error:', error)
+        return NextResponse.json({ error: error instanceof Error ? error.message : 'Failed to update paper' }, { status: 500 })
+    }
+}

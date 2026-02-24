@@ -139,6 +139,56 @@ Highlight similarities and differences. Use a clear, systematic format.`;
   return response.text || '';
 }
 
+export async function generateResearchDraft(
+  papers: { title: string; authors: string[]; year: number; abstract: string }[]
+): Promise<string> {
+  const paperList = papers
+    .map((p, i) => `${i + 1}. ${p.title} (${p.year})\n   Authors: ${p.authors.join(', ')}\n   Abstract: ${p.abstract.slice(0, 350)}`)
+    .join('\n\n')
+
+  const prompt = `You are helping a student write a research paper. Based on the following ${papers.length} papers, generate three structured sections for a research paper draft.
+
+Papers:
+${paperList}
+
+Generate the following sections in formal academic style:
+
+## 1. Introduction
+Write a compelling introduction (3-4 paragraphs) that:
+- Introduces the research domain and its importance
+- States the research problem and motivation
+- Briefly reviews what these papers contribute
+- Ends with the paper's objective/purpose
+
+## 2. Literature Review
+Write a synthesised literature review (4-5 paragraphs) that:
+- Groups related works thematically
+- Compares methodologies and findings
+- Highlights agreements and contradictions
+- Uses proper in-text citations like (Author, Year)
+
+## 3. Methodology
+Write a methodology section (2-3 paragraphs) that:
+- Describes the research approach informed by these papers
+- Discusses data collection, analysis methods, or experimental design
+- Explains how this methodology builds on or differs from existing work
+
+Use formal academic language throughout. Do not add a title/header above section 1.`
+
+  const ai = getGeminiClient()
+
+  const response = await ai.models.generateContent({
+    model: MODEL,
+    contents: prompt,
+    config: {
+      maxOutputTokens: 2500,
+      temperature: 0.4,
+    },
+  })
+
+  return response.text || ''
+}
+
 export async function* streamCompletion(
   systemPrompt: string,
   userPrompt: string,

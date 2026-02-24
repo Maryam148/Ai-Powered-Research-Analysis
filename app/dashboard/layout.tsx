@@ -33,6 +33,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         { icon: '📊', label: 'Overview', href: '/dashboard' },
         { icon: '🔍', label: 'Search', href: '/dashboard/search' },
         { icon: '📚', label: 'Library', href: '/dashboard/library' },
+        { icon: '🕸️', label: 'Citation Mesh', href: '/dashboard/citation-mesh' },
         { icon: '📝', label: 'Lit Review', href: '/dashboard/literature-review' },
         { icon: '📈', label: 'Trends', href: '/dashboard/trends' },
         { icon: '⚖️', label: 'Compare', href: '/dashboard/compare' },
